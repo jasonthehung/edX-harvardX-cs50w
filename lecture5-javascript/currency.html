@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Currency Exchange</title>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelector("form").onsubmit = () => {
+                    fetch("https://api.exchangeratesapi.io/latest?base=USD")
+                        .then((response) => response.json())
+                        .then((data) => {
+                            const currency = document
+                                .querySelector("#currency")
+                                .value.toUpperCase()
+                            console.log(data)
+                        })
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <form>
+            <input id="currency" placeholder="Currency" type="text" />
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>

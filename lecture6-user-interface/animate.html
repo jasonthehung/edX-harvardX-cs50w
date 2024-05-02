@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome!</title>
+        <style>
+            @keyframes move {
+                0% {
+                    left: 0%;
+                }
+
+                25% {
+                    left: 10%;
+                }
+
+                50% {
+                    left: -10%;
+                }
+
+                100% {
+                    left: 0%;
+                }
+            }
+            @keyframes delete {
+                0% {
+                    opacity: 1;
+                    height: 100%;
+                    line-height: 100%;
+                    padding: 20px;
+                    margin-bottom: 10px;
+                }
+
+                75% {
+                    opacity: 0;
+                    height: 100%;
+                    line-height: 100%;
+                    padding: 20px;
+                    margin-bottom: 10px;
+                }
+
+                100% {
+                    opacity: 0;
+                    height: 0%;
+                    line-height: 0%;
+                    padding: 0%;
+                    margin-bottom: 0%;
+                }
+            }
+
+            h1 {
+                text-align: center;
+                position: relative;
+                animation-name: move;
+                animation-duration: 10s;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+            }
+
+            .post {
+                display: flex;
+                border: 1px solid black;
+                justify-content: space-between;
+                background: yellow;
+
+                animation-name: delete;
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+                animation-play-state: paused;
+            }
+        </style>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelector("#stop").onclick = () => {
+                    if (
+                        document.querySelector("h1").style
+                            .animationPlayState === "paused"
+                    ) {
+                        document.querySelector("h1").style.animationPlayState =
+                            "running"
+                    } else {
+                        document.querySelector("h1").style.animationPlayState =
+                            "paused"
+                    }
+                }
+
+                document.querySelector("#addPost").onclick = () => {
+                    const post = document.createElement("div")
+                    post.className = "post"
+                    post.innerHTML = `New Post <button class="delete">delete</button>`
+
+                    document.querySelector("#posts").append(post)
+                }
+
+                // Just an alternative way to implement event of delete button
+                document.addEventListener("click", (event) => {
+                    const element = event.target
+                    if (element.className === "delete") {
+                        element.parentElement.style.animationPlayState =
+                            "running"
+                        element.parentElement.addEventListener(
+                            "animationend",
+                            () => {
+                                element.parentElement.remove()
+                            }
+                        )
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <button id="stop">Click me</button>
+        <div id="posts">
+            <div class="post">Post1<button class="delete">delete</button></div>
+            <div class="post">Post1<button class="delete">delete</button></div>
+            <div class="post">Post1<button class="delete">delete</button></div>
+            <div class="post">Post1<button class="delete">delete</button></div>
+        </div>
+        <button id="addPost">Add Post</button>
+    </body>
+</html>
